@@ -45,22 +45,17 @@ def message():
     password = data['password']
     text = data['text']
 
-    print(data)
     # Simple authentication
     if user in users:
-        print('user in users')
         if password != users[user]:
-            print('password not match')
             return {
                 'ok': False,
                 'status': 'access denied',
             }
     else:
-        print('register a new user')
         users[user] = password
 
     # Save message if authenticated
-    print('saving message')
     message = {
         'user': user,
         'text': text,

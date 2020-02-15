@@ -7,9 +7,7 @@ password = input('Enter your password: ')
 
 while True:
     messages = requests.get('http://127.0.0.1:5000/history').json()['messages']
-    print(messages)
     for m in messages:
-        print(m)
         print(datetime.fromtimestamp(m['time']).isoformat(), m['user'])
         print(m['text'])
         print()
