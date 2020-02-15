@@ -3,6 +3,11 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+users = {
+    'Bielarusik': 'vasiliok',
+    'Labusik': 'nugerai',
+}
+
 messages = [
     {
         'user': 'Bielarusik',
@@ -25,6 +30,7 @@ def status():
     return {
         'status': True,
         'time': datetime.now().isoformat(),
+        'users_count': len(users),
         'sent_messages': len(messages),
     }
 
