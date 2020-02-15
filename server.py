@@ -25,6 +25,7 @@ def status():
     return {
         'status': True,
         'time': datetime.now().isoformat(),
+        'sent_messages': len(messages),
     }
 
 @app.route('/history')
