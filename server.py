@@ -36,7 +36,14 @@ def status():
 
 @app.route('/history')
 def history():
-    return { 'messages': messages }
+    time = float(request.args['time'])
+    print(time)
+    filtered_messages = []
+    for m in messages:
+        if m['time'] > time:
+            filtered_messages.append(m)
+    print(filtered_messages)
+    return { 'messages': filtered_messages }
 
 @app.route('/message', methods=['POST'])
 def message():
