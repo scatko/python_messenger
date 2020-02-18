@@ -1,47 +1,21 @@
 import requests
-import time
+from time import sleep
 from datetime import datetime
 
-name = input('Enter your name: ')
-password = input('Enter your password: ')
+last_message_time = 0
 
-def request_messages(timestamp):
-    return requests.get(
+while True:
+    # Request and print new messages
+    response = requests.get(
         'http://127.0.0.1:5000/history',
-        params={'time': timestamp}
-    ).json()['messages']
+        params={'time': last_message_time}
+    )
 
-def print_messages(messages):
+    messages = response.json()['messages']
     for m in messages:
         print(datetime.fromtimestamp(float(m['time'])).isoformat(), m['user'])
         print(m['text'])
         print()
+        last_message_time = m['time']
 
-messages = request_messages(0)
-print_messages(messages)
-
-while True:
-    last_time = datetime.now().timestamp()
-
-    # New message
-    message = input('Enter your message: ')
-
-    req = requests.post(
-        'http://127.0.0.1:5000/message',
-        data={
-            'user': name,
-            'password': password,
-            'text': message
-        }
-    )
-
-    # Exit if not authorized
-    if not req.json()['ok']:
-        print(req.json()['status'])
-        break
-
-    # Request and print new messages
-    messages = request_messages(last_time)
-    print_messages(messages)
-
-    time.sleep(1)
+    sleep(1)
